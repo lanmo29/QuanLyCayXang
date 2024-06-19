@@ -28,16 +28,33 @@ Cây xăng là một trong những điểm cung cấp nhiên liệu thiết yế
 ## Các bảng dữ liệu cần thiết:
 1. Bảng Nhiên Liệu:
    - Mã nhiên liệu (PK), tên nhiên liệu, đơn giá, số lượng còn lại, mã nhà cung cấp (FK)
+     
+ ![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/e9951290-be0c-4607-a789-48c38f2b994a)
+
 2. Bảng Khách Hàng:
    - Mã khách hàng (PK), tên khách hàng, số điện thoại, địa chỉ
-3. Bảng Đơn Hàng:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/c872ae36-95c5-487e-a93b-12e50e53a75f)
+
+4. Bảng Đơn Hàng:
    - Mã đơn hàng (PK), mã khách hàng (FK), ngày đặt hàng, tổng tiền
-4. Bảng Chi Tiết Đơn Hàng:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/bdd57c04-e69b-4d1d-a365-112133c8b86c)
+
+6. Bảng Chi Tiết Đơn Hàng:
    - Mã chi tiết đơn hàng (PK), mã đơn hàng (FK), mã nhiên liệu (FK), số lượng, giá
-5. Bảng Nhà Cung Cấp:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/0dd594a8-86f3-409c-a7f5-da1b0084b842)
+
+8. Bảng Nhà Cung Cấp:
    - Mã nhà cung cấp (PK), tên nhà cung cấp, tên người liên hệ, số điện thoại người liên hệ, địa chỉ
+   
+  ![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/9ffcb3d6-db68-40e2-803a-ab550d3d8fc5)
+
 6. Bảng Giao Dịch Kho:
    - Mã giao dịch (PK), mã nhiên liệu (FK), số lượng, ngày giao dịch, loại giao dịch (nhập/xuất), mã nhà cung cấp (FK nếu là nhập)
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/3d508820-63e8-43ae-86ff-92b8ec305f0b)
 
 ## Tạo các bảng trong SQL Server:
 -- Bảng Nhiên Liệu
@@ -49,6 +66,7 @@ CREATE TABLE NhienLieu (
     MaNhaCungCap NVARCHAR(50),
     FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/725d5f83-d1a9-4c00-bd1e-9bd32d87fab6)
 
 -- Bảng Khách Hàng
 CREATE TABLE KhachHang (
@@ -57,6 +75,7 @@ CREATE TABLE KhachHang (
     SoDienThoai NVARCHAR(15),
     DiaChi NVARCHAR(200)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/1515343d-9a2a-454e-baf3-0f4b58293dfa)
 
 -- Bảng Đơn Hàng
 CREATE TABLE DonHang (
@@ -66,6 +85,7 @@ CREATE TABLE DonHang (
     TongTien DECIMAL(18, 2),
     FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/4148e590-7901-47ca-bd9b-d4f469894670)
 
 -- Bảng Chi Tiết Đơn Hàng
 CREATE TABLE ChiTietDonHang (
@@ -77,6 +97,7 @@ CREATE TABLE ChiTietDonHang (
     FOREIGN KEY (MaDonHang) REFERENCES DonHang(MaDonHang),
     FOREIGN KEY (MaNhienLieu) REFERENCES NhienLieu(MaNhienLieu)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/00602437-6d01-438d-900d-849d15b9cf2e)
 
 -- Bảng Nhà Cung Cấp
 CREATE TABLE NhaCungCap (
@@ -86,6 +107,7 @@ CREATE TABLE NhaCungCap (
     SoDienThoai NVARCHAR(15),
     DiaChi NVARCHAR(200)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/a578d035-d17d-4a45-ae82-16944ffa1d1d)
 
 -- Bảng Giao Dịch Kho
 CREATE TABLE GiaoDichKho (
@@ -98,6 +120,7 @@ CREATE TABLE GiaoDichKho (
     FOREIGN KEY (MaNhienLieu) REFERENCES NhienLieu(MaNhienLieu),
     FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap)
 );
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/c8ce970e-aba5-4ff9-8864-47e1363dfe0a)
 
 ## Tạo Stored Procedures (SP) cho các chức năng:
 1. Thêm nhiên liệu:
@@ -113,6 +136,8 @@ BEGIN
     VALUES (@MaNhienLieu, @TenNhienLieu, @DonGia, @SoLuongConLai, @MaNhaCungCap);
 END;
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/6b952c66-417a-4484-9109-86b797aa72aa)
+
 2. Xóa nhiên liệu:
 CREATE PROCEDURE SP_xoaNhienLieu
     @MaNhienLieu NVARCHAR(50)
@@ -120,6 +145,8 @@ AS
 BEGIN
     DELETE FROM NhienLieu WHERE MaNhienLieu = @MaNhienLieu;
 END;
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/237079e9-3d63-487b-9e7c-f409058c8a05)
 
 3. Cập nhật nhiên liệu:
 CREATE PROCEDURE SP_capNhatNhienLieu
@@ -135,6 +162,8 @@ BEGIN
     WHERE MaNhienLieu = @MaNhienLieu;
 END;
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/dc5dc042-29a0-4c1a-a98c-78fde073ba81)
+
 4. Tìm kiếm nhiên liệu:
 CREATE PROCEDURE SP_timKiemNhienLieu
     @MaNhienLieu NVARCHAR(50) = NULL,
@@ -148,6 +177,8 @@ BEGIN
     AND (MaNhaCungCap = ISNULL(@MaNhaCungCap, MaNhaCungCap));
 END;
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/fe6386bf-1cdb-4702-80c0-0e065fcf6f48)
+
 5. Xem thông tin chi tiết nhiên liệu:
 CREATE PROCEDURE SP_xemChiTietNhienLieu
     @MaNhienLieu NVARCHAR(50)
@@ -155,6 +186,8 @@ AS
 BEGIN
     SELECT * FROM NhienLieu WHERE MaNhienLieu = @MaNhienLieu;
 END;
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/fe32b884-0d76-43a7-9302-1f3bf08e602a)
 
 6. Báo cáo doanh thu:
 CREATE PROCEDURE SP_baoCaoDoanhThu
@@ -167,8 +200,10 @@ BEGIN
     WHERE NgayDat BETWEEN @NgayBatDau AND @NgayKetThuc;
 END;
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/1f2066f7-eb9c-4cca-b5e3-6bf22802e88c)
+
 ## Tạo các Function (FN) hỗ trợ:
-Tính tổng doanh thu trong khoảng thời gian:
+### Tính tổng doanh thu trong khoảng thời gian:
 CREATE FUNCTION FN_tongDoanhThu
     (@NgayBatDau DATE, @NgayKetThuc DATE)
 RETURNS DECIMAL(18, 2)
@@ -180,7 +215,10 @@ BEGIN
     WHERE NgayDat BETWEEN @NgayBatDau AND @NgayKetThuc;
     RETURN @TongTien;
 END;
-Tính tổng số lượng nhiên liệu còn lại trong kho:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/567acea8-a009-44ca-a7e5-00968ccd1782)
+
+### Tính tổng số lượng nhiên liệu còn lại trong kho:
 CREATE FUNCTION FN_tongSoLuongNhienLieu
     (@MaNhienLieu NVARCHAR(50))
 RETURNS INT
@@ -200,7 +238,10 @@ BEGIN
 
     RETURN @TongSoLuong - @SoLuongDaBan;
 END;
-Kiểm tra tồn kho tối thiểu:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/09f769f8-d811-49f0-ae57-e3639be95ee3)
+
+### Kiểm tra tồn kho tối thiểu:
 CREATE FUNCTION FN_kiemTraTonKhoToiThieu
     (@MaNhienLieu NVARCHAR(50), @SoLuongToiThieu INT)
 RETURNS BIT
@@ -212,7 +253,10 @@ BEGIN
         RETURN 1;
     RETURN 0;
 END;
-Kiểm tra tính hợp lệ của mã khách hàng:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/7939ac16-cb2a-4d73-9f16-3e341a84328a)
+
+### Kiểm tra tính hợp lệ của mã khách hàng:
 CREATE FUNCTION FN_kiemTraMaKhachHang
     (@MaKhachHang NVARCHAR(50))
 RETURNS BIT
@@ -222,7 +266,10 @@ BEGIN
         RETURN 1;
     RETURN 0;
 END;
-Kiểm tra tính hợp lệ của mã nhiên liệu:
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/7fe3ed38-6762-423c-9347-a866c30b00f4)
+
+### Kiểm tra tính hợp lệ của mã nhiên liệu:
 CREATE FUNCTION FN_kiemTraMaNhienLieu
     (@MaNhienLieu NVARCHAR(50))
 RETURNS BIT
@@ -233,6 +280,8 @@ BEGIN
     RETURN 0;
 END;
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/8699a726-dcd9-4e67-8660-9617dc16cd79)
+
 ## Thêm dữ liệu mẫu vào các bảng:
 1. Thêm dữ liệu vào bảng NhienLieu:
 INSERT INTO NhienLieu (MaNhienLieu, TenNhienLieu, DonGia, SoLuongConLai, MaNhaCungCap) VALUES
@@ -240,31 +289,42 @@ INSERT INTO NhienLieu (MaNhienLieu, TenNhienLieu, DonGia, SoLuongConLai, MaNhaCu
 ('NL2', 'Xăng RON 92', 20000, 8000, 'NCC1'),
 ('NL3', 'Dầu Diesel', 15000, 5000, 'NCC2');
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/7d0046a0-c067-49fa-8dda-f8311b8e8f56)
+
 2. Thêm dữ liệu vào bảng KhachHang:
 INSERT INTO KhachHang (MaKhachHang, TenKhachHang, SoDienThoai, DiaChi) VALUES
 ('KH1', 'Nguyen Van A', '0912345678', '123 Phan Dinh Phung, Hanoi'),
 ('KH2', 'Tran Thi B', '0987654321', '456 Hai Ba Trung, Ho Chi Minh');
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/59cf1f72-9202-4e9d-ae36-a0ff44dc4575)
 
 3. Thêm dữ liệu vào bảng DonHang và ChiTietDonHang:
 INSERT INTO DonHang (MaDonHang, MaKhachHang, NgayDat, TongTien) VALUES
 ('DH1', 'KH1', '2024-06-01', 2100000),
 ('DH2', 'KH2', '2024-06-02', 3000000);
 
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/f9ec5181-15a4-4bd7-b4d4-c29930718b5e)
+
 INSERT INTO ChiTietDonHang (MaChiTietDonHang, MaDonHang, MaNhienLieu, SoLuong, Gia) VALUES
 ('CTDH1', 'DH1', 'NL1', 100, 21000),
 ('CTDH2', 'DH2', 'NL2', 150, 20000);
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/b81b7431-ef0a-4491-bc4b-bb5d78a76fec)
 
 4. Thêm dữ liệu vào bảng NhaCungCap:
 INSERT INTO NhaCungCap (MaNhaCungCap, TenNhaCungCap, TenNguoiLienHe, SoDienThoai, DiaChi) VALUES
 ('NCC1', 'Cong Ty A', 'Nguyen Van C', '0912345678', '789 Le Duan, Da Nang'),
 ('NCC2', 'Cong Ty B', 'Tran Thi D', '0987654321', '101 Nguyen Trai, Hue');
 
-5. Thêm dữ liệu vào bảng GiaoDichKho:
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/a8556249-3ed5-44ca-a697-3e30fb47eb2c)
+
+6. Thêm dữ liệu vào bảng GiaoDichKho:
 INSERT INTO GiaoDichKho (MaGiaoDich, MaNhienLieu, SoLuong, NgayGiaoDich, LoaiGiaoDich, MaNhaCungCap) VALUES
 ('GD1', 'NL1', 10000, '2024-06-01', 'nhap', 'NCC1'),
 ('GD2', 'NL2', 8000, '2024-06-02', 'nhap', 'NCC1'),
 ('GD3', 'NL1', 100, '2024-06-01', 'xuat', 'NCC1');
+
+![image](https://github.com/lanmo29/QuanLyCayXang/assets/168812117/ac29df6b-48c8-4ce5-875e-250b618fa001)
 
 ## Kết luận
 Trên đây là các bước cần thiết để xây dựng hệ thống quản lý cây xăng sử dụng SQL. Hệ thống này cho phép người dùng quản lý nhiên liệu, khách hàng, đơn hàng, và các giao dịch kho, đồng thời cung cấp các báo cáo doanh thu giúp cây xăng hoạt động hiệu quả hơn.
